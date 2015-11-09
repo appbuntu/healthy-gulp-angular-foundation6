@@ -17,7 +17,8 @@ var paths = {
     distDev: './dist.dev',
     distProd: './dist.prod',
     distScriptsProd: './dist.prod/scripts',
-    scriptsDevServer: 'devServer/**/*.js'
+    scriptsDevServer: 'devServer/**/*.js',
+    sass: ['app/assets/scss','bower_components/foundation-apps/scss']
 };
 
 // == PIPE SEGMENTS ========
@@ -103,14 +104,14 @@ pipes.scriptedPartials = function() {
 
 pipes.builtStylesDev = function() {
     return gulp.src(paths.styles)
-        .pipe(plugins.sass())
+        .pipe(plugins.sass({includePaths: paths.sass}))
         .pipe(gulp.dest(paths.distDev));
 };
 
 pipes.builtStylesProd = function() {
     return gulp.src(paths.styles)
         .pipe(plugins.sourcemaps.init())
-            .pipe(plugins.sass())
+            .pipe(plugins.sass({includePaths: paths.sass}))
             .pipe(plugins.minifyCss())
         .pipe(plugins.sourcemaps.write())
         .pipe(pipes.minifiedFileName())

@@ -13,6 +13,8 @@ Before running any Gulp tasks:
 
 ## Project Structure
 
+This version includes Fondation-6 for App http://foundation.zurb.com/apps/docs/#!/ and support Node V4
+
 The project ships with a directory structure like:
 
     /healthy-gulp-angular
