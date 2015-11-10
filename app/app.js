@@ -1,15 +1,39 @@
-angular.module('healthyGulpAngularApp', ['ui.router'])
+(function() {
+  'use strict';
 
-.config(['$stateProvider', '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+  angular.module('MySampleApp', [ // Warning: Appname should fit with gulpfile.js & index.html
+    'ui.router',
+    'ngAnimate',
 
-        $urlRouterProvider.otherwise('/');
+    //foundation
+    'foundation',
+    'foundation.dynamicRouting',
+    'foundation.dynamicRouting.animations',
+    
+    // Application Components
+    'MyHomeModule',
+    'MySampleModule'
+  ])
+    .config(config)
+    .run(run)
+  ;
 
-        $stateProvider
+  config.$inject = ['$urlRouterProvider', '$locationProvider'];
 
-            .state('home', {
-                url: '/',
-                templateUrl: 'components/home.html'
-            });
+  function config($urlProvider, $locationProvider) {
+    $urlProvider.otherwise('/');
 
-    }]);
+    $locationProvider.html5Mode({
+      enabled:false,
+      requireBase: false
+    });
+
+    $locationProvider.hashPrefix('!');
+  }
+
+  function run() {
+    FastClick.attach(document.body);
+  }
+
+})();
+console.log ("MySampleApp Loaded");

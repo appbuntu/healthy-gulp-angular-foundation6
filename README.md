@@ -11,10 +11,14 @@ Before running any Gulp tasks:
 3. Run `npm install` in the root directory (this will install bower dependencies too)
 4. For livereload functionality, install the [livereload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
-## Project Structure
-
+### Note
 This version includes Fondation-6 for App http://foundation.zurb.com/apps/docs/#!/ and support Node V4
 
+### Bugs
+ + Check Angular & Angular-Animate get the exact same version otherwise you may get an error looking like " [$injector:unpr] Unknown provider: $$asyncCallbackProvider"
+ + AppName should be unique but sit within multiple places: gulpfile.js, app/index.html & app/app.js
+
+## Project Structure
 The project ships with a directory structure like:
 
     /healthy-gulp-angular
@@ -37,7 +41,15 @@ The project ships with a directory structure like:
     |     |
     |     |---- /components
     |           |
-    |           ...
+    |           |---- /Widgets
+                |     |
+                |     |--- Widget-1
+                |     |...
+                |
+                |-----/Pages
+                      |--- Home-Page
+                      |... 
+                     
     |
     |---- server.js
     |

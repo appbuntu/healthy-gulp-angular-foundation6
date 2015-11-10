@@ -3,7 +3,7 @@ var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 
-var port = process.env.PORT || 8080; // set our port
+var port = process.env.PORT || 8081; // set our port
 var staticdir = process.env.NODE_ENV === 'production' ? 'dist.prod' : 'dist.dev'; // get static files dir
 
 // get all data/stuff of the body (POST) parameters
@@ -18,6 +18,6 @@ app.use(express.static(__dirname + '/' + staticdir)); // set the static files lo
 require('./devServer/routes')(app); // configure our routes
 
 // start app ===============================================
-app.listen(port);                   // startup our app at http://localhost:8080
+app.listen(port);                   // startup our app at http://localhost:8081
 console.log('Starting sever on port ' + port);       // shoutout to the user
 exports = module.exports = app;             // expose app

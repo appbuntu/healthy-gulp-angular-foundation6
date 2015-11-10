@@ -6,16 +6,25 @@ var bowerFiles = require('main-bower-files');
 var print = require('gulp-print');
 var Q = require('q');
 
-// == PATH STRINGS ========
+// addon for Foundation for App
+var router   = require('front-router');
 
+
+// WARNING: appname should also be updated in:
+//   - app/app.js angular.module('MyAppName'
+//   - app/index.html both ng-app='MyAppName' and <title>My App Name</title>  
+var appname='MySampleApp';
+
+// == PATH STRINGS ========
 var paths = {
-    scripts: 'app/**/*.js',
-    styles: ['./app/**/*.css', './app/**/*.scss'],
-    images: './images/**/*',
-    index: './app/index.html',
-    partials: ['app/**/*.html', '!app/index.html'],
-    distDev: './dist.dev',
-    distProd: './dist.prod',
+    application: './app',
+    scripts    : 'app/**/*.js',
+    styles     : ['./app/**/*.css', './app/**/*.scss'],
+    images     : './images/**/*',
+    index      : './app/index.html',
+    partials   : ['app/**/*.html', '!app/index.html'],
+    distDev    : './dist.dev',
+    distProd   : './dist.prod',
     distScriptsProd: './dist.prod/scripts',
     scriptsDevServer: 'devServer/**/*.js',
     sass: ['app/assets/scss','bower_components/foundation-apps/scss']
@@ -85,6 +94,7 @@ pipes.validatedDevServerScripts = function() {
 pipes.validatedPartials = function() {
     return gulp.src(paths.partials)
         .pipe(plugins.htmlhint({'doctype-first': false}))
+        .pipe(router({path: paths.application + '/routes.js',root: paths.application}))
         .pipe(plugins.htmlhint.reporter());
 };
 
@@ -98,7 +108,7 @@ pipes.scriptedPartials = function() {
         .pipe(plugins.htmlhint.failReporter())
         .pipe(plugins.htmlmin({collapseWhitespace: true, removeComments: true}))
         .pipe(plugins.ngHtml2js({
-            moduleName: "healthyGulpAngularApp"
+            moduleName: appname
         }));
 };
 
