@@ -1,5 +1,5 @@
 // upload user local preferences if any
-try {var env=require('./.noderc1');} catch (e) {var env='';}
+try {var env=require('./.noderc');} catch (e) {var env='';}
 
 // Run node in debug mode in developpement mode ?
 var nodeopts = env.DEBUG !== undefined ? '--debug='+env.DEBUG : ''; 
@@ -8,8 +8,6 @@ var nodeopts = env.DEBUG !== undefined ? '--debug='+env.DEBUG : '';
 //   - app/app.js angular.module('MyAppName'
 //   - app/index.html both ng-app='MyAppName'  
 var appname='MySampleApp';
-
-
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
