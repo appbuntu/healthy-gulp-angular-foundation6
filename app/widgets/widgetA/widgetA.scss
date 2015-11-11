@@ -6,21 +6,21 @@
 */
 
 widget-a {
-    .status-ok {
+    .status-ON {
       color: #191970;
       border: 2px solid blue !important;
       padding:15px 50px 15px 50px;margin:0 0 5px 5px;
       box-shadow: 5px 5px 2px #656565;
       background-color: rgba(150, 200, 50,0.7);
     }
-    .status-ok:hover{background-color:greenyellow;}
+    .status-ON:hover{background-color:greenyellow;}
     
-    .status-fx {
+    .status-OFF {
       color: #191970;
       border: 2px solid red !important;
       padding:15px 50px 15px 50px;margin:0 0 5px 5px;
       box-shadow: 5px 5px 2px #656565;
       background-color: rgba(200, 10, 10,0.7);
     }
-    .status-fx:hover{background-color:red;}
+    .status-OFF:hover{background-color:red;}
 }

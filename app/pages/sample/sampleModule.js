@@ -1,4 +1,4 @@
-
+(function() {
 'use strict';
 
 // list all rependencies within the page + controler if needed
@@ -15,3 +15,4 @@ function MySampleController($scope, $stateParams, $state, $controller) {
 }
 
 console.log ("SampleModule Loaded");
+})();

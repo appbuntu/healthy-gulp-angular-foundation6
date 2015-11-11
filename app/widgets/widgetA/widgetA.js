@@ -1,4 +1,14 @@
 
+/*
+ * This model force class change simply by updating a variable within the
+ * private scope of the directive. Might not be the prefered model to change
+ * a class, but it a simple way to demonstrate how a template can interact with
+ * javascript.
+ * 
+ * Note: widgetA uses a private widgetA.scss style.
+ */
+
+(function() {
 'use strict';
 
 angular.module('WidgetA',[])
@@ -6,16 +16,15 @@ angular.module('WidgetA',[])
 .directive('widgetA', [function() {
     function link(scope, elem, attrs) {
         
-     scope.value="fx";
+     scope.value="OFF";
   
      scope.clicked = function () {
-         if (scope.value === "ok") {
-            scope.value = "fx"; 
+         if (scope.value === "ON") {
+            scope.value = "OFF"; 
          } else {
-            scope.value = "ok";
+            scope.value = "ON";
          }
-         console.log ("Togle clicked value=" + scope.value);
-
+         console.log ("Clicked WidgetA value=" + scope.value);
      };
   
     }    
@@ -31,3 +40,4 @@ angular.module('WidgetA',[])
 }]);
 
 console.log ("widgetA Loaded");
+})();

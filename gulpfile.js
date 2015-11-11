@@ -21,7 +21,7 @@ var paths = {
     application: './app',
     scripts    : './app/**/*.js',
     styles     : ['./app/**/*.css', './app/**/*.scss'],
-    images     : ['./*ico','./app/**/*.png','./app/**/*.jpg','./app/**/*.jpeg','./app/**/*.svg','./app/**/*.ttf'],
+    images     : ['./app/**/*.ico','./app/**/*.png','./app/**/*.jpg','./app/**/*.jpeg','./app/**/*.svg','./app/**/*.ttf'],
     index      : './app/index.html',
     partials   : ['app/**/*.html', '!app/index.html'],
     distDev    : './dist.dev',
@@ -68,7 +68,7 @@ pipes.builtAppScriptsProd = function() {
         .pipe(pipes.orderedAppScripts())
         .pipe(plugins.sourcemaps.init())
             .pipe(plugins.concat('app.min.js'))
-            .pipe(plugins.uglify())
+            // .pipe(plugins.uglify())
         .pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(paths.distScriptsProd));
 };
@@ -104,11 +104,20 @@ pipes.builtPartialsDev = function() {
         .pipe(gulp.dest(paths.distDev));
 };
 
+
+
 pipes.scriptedPartials = function() {
     return pipes.validatedPartials()
         .pipe(plugins.htmlhint.failReporter())
         .pipe(plugins.htmlmin({collapseWhitespace: true, removeComments: true}))
-        .pipe(plugins.ngHtml2js({declareModule:true, moduleName: appname}));
+        .pipe(plugins.ngHtml2js({
+            moduleName: appname,
+            template: "(function() {"
+               + "angular.module('<%= moduleName %>').run(['$templateCache', function($templateCache) {"
+               + "$templateCache.put('<%= template.url %>',\n    '<%= template.escapedContent %>');"
+               + "}]);\n"
+               + "})();\n"
+        }));    
 };
 
 pipes.builtStylesDev = function() {
