@@ -1,9 +1,16 @@
-This project is a starting point for AngularJS projects using the [Gulp](http://gulpjs.com/) streaming build system. Almost everything important is in [gulpfile.js](https://github.com/paislee/healthy-gulp-angular/blob/master/gulpfile.js).
+This is a fork for Zurb's Foundation-6 from http://paislee.io/a-healthy-gulp-setup-for-angularjs-projects
 
+### Modification from original version
+ + support for Fondation-6 for App http://foundation.zurb.com/apps/docs/#!/
+ + support for NodeJS V4+V5
+ + sample based on a components somehow similar to what Angular-2 should use
+ + support development and production mode [javascript html partial templates are loaded in the right order where ever they are within dev tree]
+ + support node debugger in development mode [tested with Netbeans 8.1, but should work with any]
+
+This project is a starting point for AngularJS projects using the [Gulp](http://gulpjs.com/) streaming build system. Almost everything important is in [gulpfile.js](https://github.com/paislee/healthy-gulp-angular/blob/master/gulpfile.js).
 For a full discussion of the setup, please refer to the companion [blog post](http://paislee.io/a-healthy-gulp-setup-for-angularjs-projects).
 
 ## Installation
-
 Before running any Gulp tasks:
 
 1. Check out this repository
@@ -11,13 +18,13 @@ Before running any Gulp tasks:
 3. Run `npm install` in the root directory (this will install bower dependencies too)
 4. For livereload functionality, install the [livereload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
-### Note
-This version includes Fondation-6 for App http://foundation.zurb.com/apps/docs/#!/ and support Node V4
+
 
 ### Bugs
  + Check Angular & Angular-Animate get the exact same version otherwise you may get an error looking like " [$injector:unpr] Unknown provider: $$asyncCallbackProvider"
  + AppName should be unique but sit within multiple places: gulpfile.js, app/index.html & app/app.js
- + Gulp watch modification only on existing files. Adding a new file will not be detected. User should restart Gulp watch command.
+ + Gulp watch modification only on existing files. Adding a new file will not be detected. User should restart Gulp watch command
+ + In some case automatic update notification to browser fail and page has to be reloaded manually
 
 ## Project Structure
 The project ships with a directory structure like:
