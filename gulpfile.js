@@ -16,6 +16,9 @@ var router   = require('front-router');
 //   - app/index.html both ng-app='MyAppName'  
 var appname='MySampleApp';
 
+// Run node in debug mode in developpement mode ?
+var nodeopts= '--debug'; // set to '' to remove debugger
+
 // == PATH STRINGS ========
 var paths = {
     application: './app',
@@ -276,7 +279,7 @@ gulp.task('clean-build-app-prod', ['clean-prod'], pipes.builtAppProd);
 gulp.task('watch-dev', ['clean-build-app-dev', 'validate-devserver-scripts'], function() {
 
     // start nodemon to auto-reload the dev server
-    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/'], env: {NODE_ENV : 'development'} })
+    plugins.nodemon({  exec: 'node ' + nodeopts, script: 'server.js', ext: 'js', watch: ['devServer/'], env: {NODE_ENV : 'development'} })
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
             console.log('[nodemon] restarted dev server');

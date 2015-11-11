@@ -12,7 +12,8 @@
     
     // Application Components
     'MyHomeModule',
-    'MySampleModule'
+    'MySampleModule',
+    'MyAjaxModule'
   ])
     .config(config)
     .run(run)

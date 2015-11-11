@@ -17,7 +17,7 @@
 angular.module('WidgetB',[])
 
 .directive('widgetB', [function() {
-    function link(scope, elem, attrs) {
+    function mymethods(scope, elem, attrs) {
     
      scope.button = elem.children('span');
      console.log (scope.button);
@@ -40,7 +40,7 @@ angular.module('WidgetB',[])
     return {
         restrict: 'E',
         templateUrl: 'widgets/widgetB/widgetB.html',
-        link: link,
+        link: mymethods,
         scope: {
             initvalues : '='
         }

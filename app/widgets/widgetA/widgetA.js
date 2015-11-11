@@ -14,7 +14,7 @@
 angular.module('WidgetA',[])
 
 .directive('widgetA', [function() {
-    function link(scope, elem, attrs) {
+    function mymethods(scope, elem, attrs) {
         
      scope.value="OFF";
   
@@ -32,10 +32,8 @@ angular.module('WidgetA',[])
     return {
         restrict: 'E',
         templateUrl: 'widgets/widgetA/widgetA.html',
-        link: link,
-        scope: {
-            initvalues : '='
-        }
+        link: mymethods,
+        scope: {}
     };
 }]);
 
