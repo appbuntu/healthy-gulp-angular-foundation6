@@ -1,10 +1,13 @@
+// upload user local preferences if any
+try {var env=require('./.noderc');} catch (e) {var env='';}
+
 var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 
-var port = process.env.PORT || 8081; // set our port
-var staticdir = process.env.NODE_ENV === 'production' ? 'dist.prod' : 'dist.dev'; // get static files dir
+var port = env.HTTP || 8080; // set our port
+var staticdir = env.MODE === 'prod' ? 'dist.prod' : 'dist.dev'; // get static files dir
 
 // get all data/stuff of the body (POST) parameters
 app.use(bodyParser.json()); // parse application/json

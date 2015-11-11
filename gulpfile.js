@@ -1,3 +1,16 @@
+// upload user local preferences if any
+try {var env=require('./.noderc1');} catch (e) {var env='';}
+
+// Run node in debug mode in developpement mode ?
+var nodeopts = env.DEBUG !== undefined ? '--debug='+env.DEBUG : ''; 
+
+// WARNING: appname should also be updated in:
+//   - app/app.js angular.module('MyAppName'
+//   - app/index.html both ng-app='MyAppName'  
+var appname='MySampleApp';
+
+
+
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 var del = require('del');
@@ -7,17 +20,8 @@ var print = require('gulp-print');
 var Q = require('q');
 var imagemin = require('gulp-imagemin'), pngquant = require('imagemin-pngquant');
 
-// addon for Foundation for App
+// addon for Foundation6
 var router   = require('front-router');
-
-
-// WARNING: appname should also be updated in:
-//   - app/app.js angular.module('MyAppName'
-//   - app/index.html both ng-app='MyAppName'  
-var appname='MySampleApp';
-
-// Run node in debug mode in developpement mode ?
-var nodeopts= '--debug'; // set to '' to remove debugger
 
 // == PATH STRINGS ========
 var paths = {

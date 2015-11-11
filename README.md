@@ -10,7 +10,7 @@ This is a fork for Zurb's Foundation-6 from http://paislee.io/a-healthy-gulp-set
 This project is a starting point for AngularJS projects using the [Gulp](http://gulpjs.com/) streaming build system. Almost everything important is in [gulpfile.js](https://github.com/paislee/healthy-gulp-angular/blob/master/gulpfile.js).
 For a full discussion of the setup, please refer to the companion [blog post](http://paislee.io/a-healthy-gulp-setup-for-angularjs-projects).
 
-## Installation
+### Installation
 Before running any Gulp tasks:
 
 1. Check out this repository
@@ -18,6 +18,15 @@ Before running any Gulp tasks:
 3. Run `npm install` in the root directory (this will install bower dependencies too)
 4. For livereload functionality, install the [livereload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
+### customisation
+Create a ".noderc.js" at project root using following template
+
+    var runtime= {
+        MODE : "prod", // dev or prod [default dev]
+        HTTP : 8081,   // httpd port  [default 8080]
+        DEBUG: 9081    // nodejs debug port in dev mode [comment to remove debug in devmod]
+    };
+    module.exports = runtime;
 
 
 ### Bugs
