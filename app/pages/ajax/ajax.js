@@ -49,7 +49,7 @@ angular.module('MyAjaxModule', [])
 
             handler.error(function(status, errcode, headers) {
                 console.log ("Hoops /api/get-time failed err=" + errcode);
-                scope.data = "Server not Responding"
+                scope.data = "Server not Responding";
                 scope.status = "FX";
             });
         };
@@ -110,7 +110,7 @@ angular.module('MyAjaxModule', [])
 
             handler.error(function(status, errcode, headers) {
                 console.log ("Hoops /api/get-date failed err=" + errcode);
-                scope.data = "Server not Responding"
+                scope.data = "Server not Responding";
                 scope.status = "FX";
             });
         };

@@ -5,21 +5,29 @@
     to a specific widget or it value will be propagated at a global level.
 */
 
+@mixin server-button {
+    display: block;
+    margin: 1rem;
+    box-shadow: 5px 5px 2px #656565; 
+}
+
 server-date, server-time {
+    
     .OK {
+      @include server-button;
       color: #191970;
       border: 2px solid blue !important;
       padding:15px 50px 15px 50px;margin:0 0 5px 5px;
-      box-shadow: 5px 5px 2px #656565;
+      
       background-color: rgba(150, 200, 50,0.7);
     }
     .OK:hover{background-color:greenyellow;}
     
     .FX {
+      @include server-button;
       color: #191970;
       border: 2px solid red !important;
       padding:15px 50px 15px 50px;margin:0 0 5px 5px;
-      box-shadow: 5px 5px 2px #656565;
       background-color: rgba(255, 165, 0,0.7);
     }
     .FX:hover{background-color:red;}
