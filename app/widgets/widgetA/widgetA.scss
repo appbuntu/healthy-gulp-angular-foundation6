@@ -1,0 +1,26 @@
+/*
+    Sample of style overload for a specific widget
+
+    Note: this SCSS is injected with main HTML page, it scope should be reduce
+    to a specific widget or it value will be propagated at a global level.
+*/
+
+widget-a {
+    .status-ok {
+      color: #191970;
+      border: 2px solid blue !important;
+      padding:15px 50px 15px 50px;margin:0 0 5px 5px;
+      box-shadow: 5px 5px 2px #656565;
+      background-color: rgba(150, 200, 50,0.7);
+    }
+    .status-ok:hover{background-color:greenyellow;}
+    
+    .status-fx {
+      color: #191970;
+      border: 2px solid red !important;
+      padding:15px 50px 15px 50px;margin:0 0 5px 5px;
+      box-shadow: 5px 5px 2px #656565;
+      background-color: rgba(200, 10, 10,0.7);
+    }
+    .status-fx:hover{background-color:red;}
+}

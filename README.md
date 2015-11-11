@@ -17,6 +17,7 @@ This version includes Fondation-6 for App http://foundation.zurb.com/apps/docs/#
 ### Bugs
  + Check Angular & Angular-Animate get the exact same version otherwise you may get an error looking like " [$injector:unpr] Unknown provider: $$asyncCallbackProvider"
  + AppName should be unique but sit within multiple places: gulpfile.js, app/index.html & app/app.js
+ + Gulp watch modification only on existing files. Adding a new file will not be detected. User should restart Gulp watch command.
 
 ## Project Structure
 The project ships with a directory structure like:
@@ -39,16 +40,15 @@ The project ships with a directory structure like:
     |     |     |---- _settings.scss
     |     |     |---- app.scss
     |     |
-    |     |---- /components
-    |           |
-    |           |---- /Widgets
-                |     |
-                |     |--- Widget-1
-                |     |...
-                |
-                |-----/Pages
-                      |--- Home-Page
-                      |... 
+    |     |
+    |     |---- /Widgets
+          |     |
+          |     |--- Widget-1
+          |     |...
+          |
+          |-----/Pages
+                |--- Home-Page
+                |... 
                      
     |
     |---- server.js

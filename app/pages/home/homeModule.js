@@ -1,3 +1,4 @@
+(function() {
 'use strict';
 
 // list all rependencies within the page + controler if needed
@@ -14,3 +15,4 @@ function MyHomeController($scope, $stateParams, $state, $controller) {
 }
 
 console.log ("HomeModule Loaded");
+})();

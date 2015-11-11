@@ -5,6 +5,7 @@ var es = require('event-stream');
 var bowerFiles = require('main-bower-files');
 var print = require('gulp-print');
 var Q = require('q');
+var imagemin = require('gulp-imagemin'), pngquant = require('imagemin-pngquant');
 
 // addon for Foundation for App
 var router   = require('front-router');
@@ -12,15 +13,15 @@ var router   = require('front-router');
 
 // WARNING: appname should also be updated in:
 //   - app/app.js angular.module('MyAppName'
-//   - app/index.html both ng-app='MyAppName' and <title>My App Name</title>  
+//   - app/index.html both ng-app='MyAppName'  
 var appname='MySampleApp';
 
 // == PATH STRINGS ========
 var paths = {
     application: './app',
-    scripts    : 'app/**/*.js',
+    scripts    : './app/**/*.js',
     styles     : ['./app/**/*.css', './app/**/*.scss'],
-    images     : './images/**/*',
+    images     : ['./*ico','./app/**/*.png','./app/**/*.jpg','./app/**/*.jpeg','./app/**/*.svg','./app/**/*.ttf'],
     index      : './app/index.html',
     partials   : ['app/**/*.html', '!app/index.html'],
     distDev    : './dist.dev',
@@ -94,7 +95,7 @@ pipes.validatedDevServerScripts = function() {
 pipes.validatedPartials = function() {
     return gulp.src(paths.partials)
         .pipe(plugins.htmlhint({'doctype-first': false}))
-        .pipe(router({path: paths.application + '/routes.js',root: paths.application}))
+        .pipe(router({path: './app/tmp/routes.js', root: paths.application}))
         .pipe(plugins.htmlhint.reporter());
 };
 
@@ -107,9 +108,7 @@ pipes.scriptedPartials = function() {
     return pipes.validatedPartials()
         .pipe(plugins.htmlhint.failReporter())
         .pipe(plugins.htmlmin({collapseWhitespace: true, removeComments: true}))
-        .pipe(plugins.ngHtml2js({
-            moduleName: appname
-        }));
+        .pipe(plugins.ngHtml2js({declareModule:true, moduleName: appname}));
 };
 
 pipes.builtStylesDev = function() {
@@ -130,12 +129,17 @@ pipes.builtStylesProd = function() {
 
 pipes.processedImagesDev = function() {
     return gulp.src(paths.images)
-        .pipe(gulp.dest(paths.distDev + '/images/'));
+        .pipe(gulp.dest(paths.distDev));
 };
 
 pipes.processedImagesProd = function() {
     return gulp.src(paths.images)
-        .pipe(gulp.dest(paths.distProd + '/images/'));
+       .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest(paths.distProd));
 };
 
 pipes.validatedIndex = function() {
@@ -289,6 +293,12 @@ gulp.task('watch-dev', ['clean-build-app-dev', 'validate-devserver-scripts'], fu
         return pipes.builtPartialsDev()
             .pipe(plugins.livereload());
     });
+    
+    // watch Images
+    gulp.watch(paths.images, function() {
+        return pipes.processedImagesDev()
+            .pipe(plugins.livereload());
+    });
 
     // watch styles
     gulp.watch(paths.styles, function() {
@@ -326,6 +336,12 @@ gulp.task('watch-prod', ['clean-build-app-prod', 'validate-devserver-scripts'], 
     // watch hhtml partials
     gulp.watch(paths.partials, function() {
         return pipes.builtAppScriptsProd()
+            .pipe(plugins.livereload());
+    });
+    
+    // watch Images
+    gulp.watch(paths.images, function() {
+        return pipes.processedImagesProd()
             .pipe(plugins.livereload());
     });
 

@@ -35,5 +35,5 @@
     FastClick.attach(document.body);
   }
 
-})();
 console.log ("MySampleApp Loaded");
+})();

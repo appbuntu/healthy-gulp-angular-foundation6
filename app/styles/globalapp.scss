@@ -1,0 +1,22 @@
+/*
+    Every SCSS files will be injected into main HTML page
+*/
+
+.status-ok {
+  color: #191970;
+  border: 2px solid greenyellow !important;
+  padding:15px 50px 15px 50px;margin:0 0 5px 5px;
+  box-shadow: 5px 5px 2px #656565;
+  background-color: rgba(154, 205, 50,0.7);
+}
+.status-ok:hover{background-color:greenyellow;}
+
+.status-fx {
+  color: #191970;
+  border: 2px solid #ff0000 !important;
+  padding:15px 50px 15px 50px;margin:0 0 5px 5px;
+  box-shadow: 5px 5px 2px #656565;
+  background-color: rgba(154, 205, 50,0.7);
+}
+.status-fx:hover{background-color:#696969;}
+
