@@ -21,6 +21,6 @@ app.use(express.static(__dirname + '/' + staticdir)); // set the static files lo
 require('./devServer/routes')(app); // configure our routes
 
 // start app ===============================================
-app.listen(port);                   // startup our app at http://localhost:8081
-console.log('Starting sever on port ' + port);       // shoutout to the user
-exports = module.exports = app;             // expose app
+app.listen(port);
+console.log('Starting server on port ' + port);
+exports = module.exports = app; // expose app
