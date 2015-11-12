@@ -71,6 +71,7 @@ pipes.builtAppScriptsProd = function() {
     var validatedAppScripts = pipes.validatedAppScripts();
 
     return es.merge(scriptedPartials, validatedAppScripts)
+        .pipe(plugins.ngAnnotate())
         .pipe(pipes.orderedAppScripts())
         .pipe(plugins.sourcemaps.init())
             .pipe(plugins.concat('app.min.js'))
@@ -86,7 +87,6 @@ pipes.builtVendorScriptsDev = function() {
 
 pipes.builtVendorScriptsProd = function() {
     return gulp.src(bowerFiles('**/*.js'))
-        .pipe(plugins.ngAnnotate())
         .pipe(pipes.orderedVendorScripts())
         .pipe(plugins.concat('vendor.min.js'))
         .pipe(plugins.uglify())
@@ -328,7 +328,7 @@ gulp.task('watch-dev', ['clean-build-app-dev', 'validate-devserver-scripts'], fu
 gulp.task('watch-prod', ['clean-build-app-prod', 'validate-devserver-scripts'], function() {
 
     // start nodemon to auto-reload the dev server
-    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/'], env: {NODE_ENV : 'production'} })
+    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/'], env: {MODE : 'prod'} })
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
             console.log('[nodemon] restarted dev server');

@@ -6,8 +6,12 @@ var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 
-var port = env.HTTP || 8080; // set our port
-var staticdir = env.MODE === 'prod' ? 'dist.prod' : 'dist.dev'; // get static files dir
+var port = env.HTTP || 8080;  // get port from .noderc.js or use default
+
+// chose dev or prod rootdir
+var staticdir = 'dist.dev';
+if (process.env.MODE) staticdir = process.env.MODE === 'prod' ? 'dist.prod' : 'dist.dev';
+else staticdir = env.MODE === 'prod' ? 'dist.prod' : 'dist.dev';
 
 // get all data/stuff of the body (POST) parameters
 app.use(bodyParser.json()); // parse application/json
@@ -26,5 +30,5 @@ app.get('/*', function(req, res) {res.redirect('/#!' + req.originalUrl);});
 
 // start app ===============================================
 app.listen(port);
-console.log('Starting server on port ' + port);
+console.log('Starting server on port ' + port + ' ROOTDIR=' + staticdir);
 exports = module.exports = app; // expose app
