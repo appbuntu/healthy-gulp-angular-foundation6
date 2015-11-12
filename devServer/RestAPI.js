@@ -2,7 +2,7 @@
  *  Dummy API that return basic JSON objects  
  */
 
-module.exports = function(app) {
+function RestAPI (env, app) {
 'use strict';
     
  app.get('/api/get-date', function (req, res) {
@@ -16,4 +16,7 @@ module.exports = function(app) {
   res.send({type: 'time', data: time});
  });   
 
-};
+}
+
+console.log ("RestAPI Loaded");
+module.exports = RestAPI;

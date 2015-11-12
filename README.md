@@ -22,13 +22,13 @@ Before running any Gulp tasks:
 Create a ".noderc.js" at project root using following template
 
     var runtime= {
-        MODE : "prod", // dev or prod [default dev]
-        HTTP : 8081,   // httpd port  [default 8080]
-        DEBUG: 9081,   // nodejs debug port in dev mode [comment to remove debug in devmod]
-        APPNAME: "MyFirstApp"  // replace @@APPNAME@@ in Index.html & app.js for dev/prod
+        APPNAME: "MyFirstApp"    // replace @@APPNAME@@ in Index.html & app.js for dev/prod
+        MODE   : "prod",         // default GULP build mode dev|prod [default dev]
+        HOST   : "localhost",    // listen on a specific interface/IP [default==localhost]
+        HTTP   : 8081,           // httpd port  [default 8080]
+        DEBUG  : 9081,           // nodejs debug port in dev mode [comment to remove debug in devmod]
     };
     module.exports = runtime;
-
 
 ### Bugs
  + Check Angular & Angular-Animate get the exact same version otherwise you may get an error looking like " [$injector:unpr] Unknown provider: $$asyncCallbackProvider"
