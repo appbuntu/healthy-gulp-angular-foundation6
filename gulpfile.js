@@ -1,5 +1,5 @@
 // upload user local preferences if any
-try {var env=require('./.noderc');} catch (e) {var env='';}
+try {var env=require('./.noderc');} catch (e) {var env={APPNAME:"NoName"};}
 
 // Run node in debug mode in developpement mode ?
 var nodeopts = env.DEBUG !== undefined ? '--debug='+env.DEBUG : ''; 
@@ -57,7 +57,8 @@ pipes.minifiedFileName = function() {
 pipes.validatedAppScripts = function() {
     return gulp.src(paths.scripts)
         .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('jshint-stylish'));
+        .pipe(plugins.jshint.reporter('jshint-stylish'))
+        .pipe(plugins.replace('@@APPNAME@@', env.APPNAME));
 };
 
 pipes.builtAppScriptsDev = function() {
@@ -85,6 +86,7 @@ pipes.builtVendorScriptsDev = function() {
 
 pipes.builtVendorScriptsProd = function() {
     return gulp.src(bowerFiles('**/*.js'))
+        .pipe(plugins.ngAnnotate())
         .pipe(pipes.orderedVendorScripts())
         .pipe(plugins.concat('vendor.min.js'))
         .pipe(plugins.uglify())
@@ -108,8 +110,6 @@ pipes.builtPartialsDev = function() {
     return pipes.validatedPartials()
         .pipe(gulp.dest(paths.distDev));
 };
-
-
 
 pipes.scriptedPartials = function() {
     return pipes.validatedPartials()
@@ -157,7 +157,8 @@ pipes.processedImagesProd = function() {
 };
 
 pipes.validatedIndex = function() {
-    return gulp.src(paths.index)
+    return gulp.src(paths.index)       
+        .pipe(plugins.replace('@@APPNAME@@', env.APPNAME))
         .pipe(plugins.htmlhint())
         .pipe(plugins.htmlhint.reporter());
 };
@@ -202,6 +203,7 @@ pipes.builtAppDev = function() {
 pipes.builtAppProd = function() {
     return es.merge(pipes.builtIndexProd(), pipes.processedImagesProd());
 };
+
 
 // == TASKS ========
 

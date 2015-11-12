@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('MySampleApp', [ // Warning: Appname should fit with gulpfile.js & index.html
+  angular.module('@@APPNAME@@', [ // Warning: Appname should fit with gulpfile.js & index.html
     'ui.router',
     'ngAnimate',
 
@@ -31,5 +31,5 @@
     FastClick.attach(document.body);
   }
 
-console.log ("MySampleApp Loaded");
+console.log ("@@APPNAME@@ Loaded");
 })();

@@ -24,7 +24,8 @@ Create a ".noderc.js" at project root using following template
     var runtime= {
         MODE : "prod", // dev or prod [default dev]
         HTTP : 8081,   // httpd port  [default 8080]
-        DEBUG: 9081    // nodejs debug port in dev mode [comment to remove debug in devmod]
+        DEBUG: 9081,   // nodejs debug port in dev mode [comment to remove debug in devmod]
+        APPNAME: "MyFirstApp"  // replace @@APPNAME@@ in Index.html & app.js for dev/prod
     };
     module.exports = runtime;
 

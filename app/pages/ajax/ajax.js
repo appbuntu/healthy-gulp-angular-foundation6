@@ -15,7 +15,7 @@ var tmpl = '<span class="{{status}}" ng-click="clicked()"> {{info}}: [{{data}}] 
 // list all rependencies within the page + controler if needed
 angular.module('MyAjaxModule', [])
 
-.directive('serverTime', ["$http", "$timeout", function($http, $timeout) {
+.directive('serverTime', function($http, $timeout) {
     
         
     function private_methods(scope, elem, attrs) {
@@ -74,9 +74,9 @@ angular.module('MyAjaxModule', [])
         link: private_methods,
         scope: {} // 100% Private Scope
     };
-}])
+})
 
-.directive('serverDate', ["$http", "$timeout", function($http, $timeout) {
+.directive('serverDate', function($http, $timeout) {
     
         
     function private_methods(scope, elem, attrs) {
@@ -135,7 +135,7 @@ angular.module('MyAjaxModule', [])
         link: private_methods,
         scope: {} // 100% Private Scope
     };
-}]);
+});
 
 console.log ("RestSampleModule Loaded");
 })();

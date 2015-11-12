@@ -19,10 +19,10 @@ app.use(express.static(__dirname + '/' + staticdir)); // set the static files lo
 
 // routes ==================================================
 
-require('./devServer/routes')(app); // configure our routes
-app.get('/*', function(req, res) {
-    res.redirect('/#!' + req.originalUrl);
-});
+require('./devServer/routes')(app); // configure application routes
+
+// rewrite requested URL to include Angular hashPrompt
+app.get('/*', function(req, res) {res.redirect('/#!' + req.originalUrl);});
 
 // start app ===============================================
 app.listen(port);
