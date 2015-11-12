@@ -24,12 +24,7 @@
   function config($urlProvider, $locationProvider) {
     $urlProvider.otherwise('/');
 
-    $locationProvider.html5Mode({
-      enabled:false,
-      requireBase: false
-    });
-
-    $locationProvider.hashPrefix('!');
+    $locationProvider.html5Mode(true).hashPrefix('!');
   }
 
   function run() {
