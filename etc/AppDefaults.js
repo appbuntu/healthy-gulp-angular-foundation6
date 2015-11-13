@@ -18,7 +18,7 @@
 
 // Default config will be superseaded by ProjectRoot/.config-l4a.js $HOME/.config-l4a.js /etc/default/config-l4a.js
 config = {
-    APPNAME: 'MyPrefredApp', 
+    APPNAME: 'MySampleApp', 
     HOST   : 'localhost',
     PORT   : 8080,
     URLBASE: '/',

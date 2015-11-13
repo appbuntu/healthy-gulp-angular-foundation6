@@ -1,5 +1,5 @@
 // upload user local preferences if any
-config=require ("./etc/Config");
+config=require ("./etc/_Config");
 
 // Run node in debug mode in developpement mode ?
 var nodeopts = config.DEBUG !== undefined ? '--debug='+config.DEBUG : ''; 

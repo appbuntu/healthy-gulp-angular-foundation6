@@ -1,5 +1,5 @@
 // upload user local preferences if any
-config = require('./etc/Config');
+config = require('./etc/_Config');
 
 var RestAPI = require('./devServer/RestAPI');
 var session = require('express-session');

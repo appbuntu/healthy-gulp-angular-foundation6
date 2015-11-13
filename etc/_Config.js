@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+var fs = require('fs');
+
 function Config () {
    'use strict';
-   var Var=[];
+   var values=[];
+   var extention='-myapp.js';
    var conf;
 
-   // Vars file path last one supersead first one.
-   var files= ["./Defaults", "/etc/default/noderc", process.env.NODERC, process.env.HOME + "/.noderc", "../.noderc"];
+   // Configs file path last one supersead first one.
+   var files= [__dirname + "/AppDefaults.js", "/etc/default/config"+ extention, process.env.NODERC, process.env.HOME + "/.config"+ extention , __dirname +"/../.config.js" ];
 
-   for (var idx in files) { // Merge config files 
+   // Parse any existing files within config list & merge them
+   for (var idx in files) { 
       if (files[idx]) {
-        try {conf = require (files[idx]);} catch(e) {conf=[];}
-        for (var i in conf) Var[i] = conf[i];
+        if (fs.existsSync (files[idx])) conf=require (files[idx]);
+        for (var i in conf) values[i] = conf[i];
       }     
    }
- return Var;
+ // console.log ("values=", values);
+ return values;
 }
 
-// console.log ("config=", Config);
 module.exports = Config();
-

@@ -19,11 +19,10 @@ Before running any Gulp tasks:
 4. For livereload functionality, install the [livereload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
 ### customisation
-    Create a ".noderc.js" at project root to overload /etc/Default.js
+    Create a ".config.js" at project root to overload ./etc/AppDefault.js
 
     var config= {
         APPNAME: "MyFirstApp"    // replace @@APPNAME@@ in Index.html & app.js for dev/prod
-
         HOST   : "localhost",    // listen on a specific interface/IP [default==localhost]
         PORT   : 8081,           // httpd port  [default 8080]
         DEBUG  : 9081,           // nodejs debug port in dev mode [comment to remove debug in devmod]
