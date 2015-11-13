@@ -13,7 +13,7 @@
 
 angular.module('WidgetA',[])
 
-.directive('widgetA', [function() {
+.directive('widgetA', function() {
     function mymethods(scope, elem, attrs) {
         
      scope.value="OFF";
@@ -35,7 +35,7 @@ angular.module('WidgetA',[])
         link: mymethods,
         scope: {}
     };
-}]);
+});
 
 console.log ("widgetA Loaded");
 })();

@@ -38,7 +38,7 @@ angular.module('MyAjaxModule', [])
 
                 // check if response is valid
                 if (response.type !== "time") {
-                    alert ("Hoops invalid response type " +  response);
+                    alert ("Hoops [server restarted] :" + response.data);
                     return;
                 }
 
@@ -99,7 +99,7 @@ angular.module('MyAjaxModule', [])
 
                 // check if response is valid
                 if (response.type !== "date") {
-                    alert ("Hoops invalid response type "+response);
+                    alert ("Hoops [server restarted] : " + response.data);
                     return;
                 }
 

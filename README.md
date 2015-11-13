@@ -19,33 +19,33 @@ Before running any Gulp tasks:
 4. For livereload functionality, install the [livereload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
 ### customisation
-Create a ".noderc.js" at project root using following template
+    Create a ".noderc.js" at project root to overload /etc/Default.js
 
-    var runtime= {
+    var config= {
         APPNAME: "MyFirstApp"    // replace @@APPNAME@@ in Index.html & app.js for dev/prod
-        MODE   : "prod",         // default GULP build mode dev|prod [default dev]
+
         HOST   : "localhost",    // listen on a specific interface/IP [default==localhost]
-        HTTP   : 8081,           // httpd port  [default 8080]
+        PORT   : 8081,           // httpd port  [default 8080]
         DEBUG  : 9081,           // nodejs debug port in dev mode [comment to remove debug in devmod]
+        URLBASE: '/'             // URL base for rewriting should match with your http server application base [default/]
     };
-    module.exports = runtime;
+    module.exports = config;
 
 ### Bugs
  + Check Angular & Angular-Animate get the exact same version otherwise you may get an error looking like " [$injector:unpr] Unknown provider: $$asyncCallbackProvider"
- + AppName should be unique but sit within multiple places: gulpfile.js, app/index.html & app/app.js
  + Gulp watch modification only on existing files. Adding a new file will not be detected. User should restart Gulp watch command
  + In some case automatic update notification to browser fail and page has to be reloaded manually
+ + Especially with IDE it's easy to have multiple GULP watching. In case of doubt when having strange result 'pkill -9 gulp"
 
 ## Project Structure
 The project ships with a directory structure like:
 
-    /healthy-gulp-angular
+    /MyProject
     |
     |---- package.json
-    |
     |---- bower.json
-    |
     |---- gulpfile.js
+    |---- .noderc.js  [Warning: contains private keys should not uploaded in Github]
     |
     |---- /app
     |     |
@@ -57,27 +57,23 @@ The project ships with a directory structure like:
     |     |     |---- _settings.scss
     |     |     |---- app.scss
     |     |
-    |     |
     |     |---- /Widgets
-          |     |
-          |     |--- Widget-1
-          |     |...
-          |
-          |-----/Pages
-                |--- Home-Page
-                |... 
-                     
+    |     |     |
+    |     |     |--- Widget-1
+    |     |     |...
+    |     |
+    |     |-----/Pages
+    |           |--- Home-Page
+    |           |... 
     |
     |---- server.js
     |
     |---- /devServer
     |     |
-    |     |---- ...
+    |     |---- RestAPIs
     |
     |---- (/dist.dev)
-    |
-    |---- (/dist.prod)
-    
+    |---- (/dist.prod
 
 __Let's break this down..__
 

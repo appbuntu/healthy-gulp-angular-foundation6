@@ -16,7 +16,7 @@
 
 angular.module('WidgetB',[])
 
-.directive('widgetB', [function() {
+.directive('widgetB', function() {
     function mymethods(scope, elem, attrs) {
     
      scope.button = elem.children('span');
@@ -45,7 +45,7 @@ angular.module('WidgetB',[])
             initvalues : '='
         }
     };
-}]);
+});
 
 console.log ("widgetB Loaded");
 })();

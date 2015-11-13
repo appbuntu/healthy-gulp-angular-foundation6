@@ -1,13 +1,8 @@
 // upload user local preferences if any
-try {var env=require('./.noderc');} catch (e) {var env={APPNAME:"NoName"};}
+config=require ("./etc/Config");
 
 // Run node in debug mode in developpement mode ?
-var nodeopts = env.DEBUG !== undefined ? '--debug='+env.DEBUG : ''; 
-
-// WARNING: appname should also be updated in:
-//   - app/app.js angular.module('MyAppName'
-//   - app/index.html both ng-app='MyAppName'  
-var appname='MySampleApp';
+var nodeopts = config.DEBUG !== undefined ? '--debug='+config.DEBUG : ''; 
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
@@ -17,6 +12,7 @@ var bowerFiles = require('main-bower-files');
 var print = require('gulp-print');
 var Q = require('q');
 var imagemin = require('gulp-imagemin'), pngquant = require('imagemin-pngquant');
+var taskListing = require('gulp-task-listing');
 
 // addon for Foundation6
 var router   = require('front-router');
@@ -56,9 +52,9 @@ pipes.minifiedFileName = function() {
 
 pipes.validatedAppScripts = function() {
     return gulp.src(paths.scripts)
+        .pipe(plugins.replace('@@APPNAME@@', config.APPNAME))
         .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('jshint-stylish'))
-        .pipe(plugins.replace('@@APPNAME@@', env.APPNAME));
+        .pipe(plugins.jshint.reporter('jshint-stylish'));
 };
 
 pipes.builtAppScriptsDev = function() {
@@ -74,8 +70,8 @@ pipes.builtAppScriptsProd = function() {
         .pipe(plugins.ngAnnotate())
         .pipe(pipes.orderedAppScripts())
         .pipe(plugins.sourcemaps.init())
-            .pipe(plugins.concat('app.min.js'))
-            .pipe(plugins.uglify())
+        .pipe(plugins.concat('app.min.js'))
+        .pipe(plugins.uglify({compress: {drop_console: true}}))
         .pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(paths.distScriptsProd));
 };
@@ -116,7 +112,7 @@ pipes.scriptedPartials = function() {
         .pipe(plugins.htmlhint.failReporter())
         .pipe(plugins.htmlmin({collapseWhitespace: true, removeComments: true}))
         .pipe(plugins.ngHtml2js({
-            moduleName: appname,
+            moduleName: config.APPNAME,
             template: "(function() {"
                + "angular.module('<%= moduleName %>').run(['$templateCache', function($templateCache) {"
                + "$templateCache.put('<%= template.url %>',\n    '<%= template.escapedContent %>');"
@@ -158,7 +154,8 @@ pipes.processedImagesProd = function() {
 
 pipes.validatedIndex = function() {
     return gulp.src(paths.index)       
-        .pipe(plugins.replace('@@APPNAME@@', env.APPNAME))
+        .pipe(plugins.replace('@@APPNAME@@', config.APPNAME))
+        .pipe(plugins.replace('@@URLBASE@@', config.URLBASE))
         .pipe(plugins.htmlhint())
         .pipe(plugins.htmlhint.reporter());
 };
@@ -206,6 +203,21 @@ pipes.builtAppProd = function() {
 
 
 // == TASKS ========
+
+// Add a task to render the output 
+gulp.task('help', taskListing.withFilters(/-/));
+   
+// clean, build of production environement
+gulp.task('build', ['clean-build-app-prod', 'validate-devserver-scripts']);
+
+gulp.task('run', function() {
+    // start nodemon to auto-reload the dev server
+    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/'], env: {MODE : 'prod'} })
+        .on('change', ['validate-devserver-scripts'])
+        .on('restart', function () {
+            console.log('[nodemon] restarted dev server');
+        });
+});       
 
 // removes all compiled dev files
 gulp.task('clean-dev', function() {
@@ -283,7 +295,7 @@ gulp.task('clean-build-app-prod', ['clean-prod'], pipes.builtAppProd);
 gulp.task('watch-dev', ['clean-build-app-dev', 'validate-devserver-scripts'], function() {
 
     // start nodemon to auto-reload the dev server
-    plugins.nodemon({  exec: 'node ' + nodeopts, script: 'server.js', ext: 'js', watch: ['devServer/'], env: {NODE_ENV : 'development'} })
+    plugins.nodemon({  exec: 'node ' + nodeopts, script: 'server.js', ext: 'js', watch: ['devServer/'], env: {NODE_ENV : 'dev'} })
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
             console.log('[nodemon] restarted dev server');
@@ -366,7 +378,7 @@ gulp.task('watch-prod', ['clean-build-app-prod', 'validate-devserver-scripts'], 
         return pipes.builtStylesProd()
             .pipe(plugins.livereload());
     });
-
+    
 });
 
 // default task builds for prod
