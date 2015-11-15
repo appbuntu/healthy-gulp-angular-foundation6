@@ -37,45 +37,48 @@ Angular/Foundation6 best practices template: fork from http://paislee.io/a-healt
         + Check Angular & Angular-Animate get the exact same version otherwise you may get an error looking like " [$injector:unpr] Unknown provider: $$asyncCallbackProvider"
         + Gulp watch modification only on existing files. Adding a new file will not be detected. User should restart Gulp watch command
         + In some case automatic update notification to browser fail and page has to be reloaded manually
-        + When using IDE it's easy to have multiple GULP process watching the same thing!!! In case of doubt when having strange result 'pkill -9 gulp; pkill -9 node"
+        + When using IDEs it's easy to have multiple GULP process watching the same thing!!! In case of doubt when having strange result 'pkill -9 gulp; pkill -9 node"
 
 ## Project Structure
 The project ships with a directory structure like:
 
     /MyProject
     |
-    |-- gulpfile.js    // Check 'gulp Help' for options
+    |-- gulpfile.js    // Check 'gulp help' for options
     |-- package.json
     |-- bower.json
     |-- .noderc.js  [Warning: contains private keys DO-NOT upload in Github]
     |
     |--- /app
     |    |
+    |    |---etc
+    |    |   |
+    |    |   | AppDefault.js   // Default config for Application
+    |    |
     |    |---Backend             [HTTPd server production/mock]
     |    |   |--- server.js        // server bootstrap and options
     |    |   |--- /RestApi
     |    |   |    | _all.js        // API module registration
-    |    |   |    | SampleApi.js   // As many API module as needed
+    |    |   |    | SampleApi.js   // As many API modules as needed
     |    |  
     |    |---Frontend            [Angular/Foundation HTML5 app]
     |    |   |--- index.html     // index template should not need any changes
     |    |   |--- app.js         // main entry point should register here every pages module
     |    |   |
-    |    |   |--- /styles        // your global SASS file and Foundation6 config
+    |    |   |--- /styles        // your global SASS files and Foundation6 config
     |    |   |    |--- _settings.scss
     |    |   |    |---- app.scss
     |    |   |
-    |    |   |--- /Widgets      // Create as many widgets Directories/Files as needed
+    |    |   |--- /Widgets      // Add as many widgets Directories/Files as needed
     |    |   |    |--- Widget-1
     |    |   |    |... Widget-xxx
     |    |   |
-    |    |   |----/Pages        // You may have as many Partial Directory/Files as needed
+    |    |   |----/Pages        // Partial Directory/Files as needed
     |    |   |    |--- Home Partial
     |    |   |    |--- Any Other Partials
+    |    |   |
+    |    |   |----/xxxx        // Partial/Widget/Style may sit in as many directories as needed
     |    |
-    |    |---etc
-    |    |---|
-    |    |---| AppDefault.js   // Default config for Application
     |
     |--- (/dist.dev)  // received copy of JS/HTML during debug session
     |--- (/dist.prod  // received compressed JS/HTML for production mode
