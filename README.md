@@ -1,4 +1,4 @@
-This is a fork for Zurb's Foundation-6 from http://paislee.io/a-healthy-gulp-setup-for-angularjs-projects
+Angular/Foundation6 best practices template: fork from http://paislee.io/a-healthy-gulp-setup-for-angularjs-projects
 
 ### Modifications from original version
         + support for Fondation-6 for App http://foundation.zurb.com/apps/docs/#!/
