@@ -83,4 +83,5 @@ The project ships with a directory structure like:
     |--- (/dist.dev)  // received copy of JS/HTML during debug session
     |--- (/dist.prod  // received compressed JS/HTML for production mode
 
-NOTE: By convention Directory/Files starting by an Uppercase can be customised, the one starting by lowercase might break GULP config. 
+    NOTE: By convention Directory/Files name starting by an Uppercase can be customised.
+          Changing those ones starting by lowercase might break GULP config. 
