@@ -8,8 +8,8 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "build": "./node_modules/.bin/gulp build",
-    "start": "node server.js"
+    "build": "./node_modules/.bin/gulp clean-build-app-dev",
+    "start": "./node_modules/.bin/gulp watch-dev"
   },
   "devDependencies": {
     "body-parser": "^1.5.2",

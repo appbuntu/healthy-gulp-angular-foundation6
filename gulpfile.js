@@ -1,8 +1,4 @@
-// upload user local preferences if any
-config=require ("./etc/_Config");
 
-// Run node in debug mode in developpement mode ?
-var nodeopts = config.DEBUG !== undefined ? '--debug='+config.DEBUG : ''; 
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
@@ -18,22 +14,32 @@ var taskListing = require('gulp-task-listing');
 var router   = require('front-router');
 
 // == PATH STRINGS ========
+var appdir  = "./app/";   // Warning to not forget trailling '/'
+config=require (appdir + "etc/_Config"); // upload user local preferences if any
+
+// Run node in debug mode in developpement mode ?
+var nodeopts = config.DEBUG !== undefined ? '--debug='+config.DEBUG : ''; 
+var frontend= appdir + config.FRONTEND;
+var backend = appdir + config.BACKEND;
+
 var paths = {
-    application: './app',
-    scripts    : './app/**/*.js',
-    styles     : ['./app/**/*.css', './app/**/*.scss'],
-    images     : ['./app/**/*.ico','./app/**/*.png','./app/**/*.jpg','./app/**/*.jpeg','./app/**/*.svg','./app/**/*.ttf'],
-    index      : './app/index.html',
-    partials   : ['app/**/*.html', '!app/index.html'],
+    application: frontend,
+    scripts    : frontend+'/**/*.js',
+    styles     : [frontend+'/**/*.css', frontend+'/**/*.scss'],
+    images     : [frontend+'/**/*.ico',frontend+'/**/*.png',frontend+'/**/*.jpg',frontend+'/**/*.jpeg',frontend+'/**/*.svg',frontend+'/**/*.ttf'],
+    index      : frontend+'/index.html',
+    partials   : [frontend + '/**/*.html', '!' + frontend +'/index.html'],
     distDev    : './dist.dev',
     distProd   : './dist.prod',
     distScriptsProd: './dist.prod/scripts',
-    scriptsDevServer: 'devServer/**/*.js',
-    sass: ['app/assets/scss','bower_components/foundation-apps/scss']
+    scriptsDevServer: backend + '/**/*.js',
+    sass: ['bower_components/foundation-apps/scss']
 };
 
-// == PIPE SEGMENTS ========
+// Run node in debug mode in developpement mode ?
+var nodeopts = config.DEBUG !== undefined ? '--debug='+config.DEBUG : ''; 
 
+// == PIPE SEGMENTS ========
 var pipes = {};
 
 pipes.orderedVendorScripts = function() {
@@ -98,7 +104,7 @@ pipes.validatedDevServerScripts = function() {
 pipes.validatedPartials = function() {
     return gulp.src(paths.partials)
         .pipe(plugins.htmlhint({'doctype-first': false}))
-        .pipe(router({path: './app/tmp/routes.js', root: paths.application}))
+        .pipe(router({path: paths.application+'/tmp/routes.js', root: paths.application}))
         .pipe(plugins.htmlhint.reporter());
 };
 
@@ -212,7 +218,7 @@ gulp.task('build', ['clean-build-app-prod', 'validate-devserver-scripts']);
 
 gulp.task('run', function() {
     // start nodemon to auto-reload the dev server
-    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/'], env: {MODE : 'prod'} })
+    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/']})
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
             console.log('[nodemon] restarted dev server');
@@ -295,7 +301,7 @@ gulp.task('clean-build-app-prod', ['clean-prod'], pipes.builtAppProd);
 gulp.task('watch-dev', ['clean-build-app-dev', 'validate-devserver-scripts'], function() {
 
     // start nodemon to auto-reload the dev server
-    plugins.nodemon({  exec: 'node ' + nodeopts, script: 'server.js', ext: 'js', watch: ['devServer/'], env: {NODE_ENV : 'dev'} })
+    plugins.nodemon({  exec: 'node ' + nodeopts, script: backend+'/server.js', ext: 'js', watch: [backend], env: {NODE_ENV : 'dev'} })
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
             console.log('[nodemon] restarted dev server');
@@ -340,7 +346,7 @@ gulp.task('watch-dev', ['clean-build-app-dev', 'validate-devserver-scripts'], fu
 gulp.task('watch-prod', ['clean-build-app-prod', 'validate-devserver-scripts'], function() {
 
     // start nodemon to auto-reload the dev server
-    plugins.nodemon({ script: 'server.js', ext: 'js', watch: ['devServer/'], env: {MODE : 'prod'} })
+    plugins.nodemon({ script: backend +'/server.js', ext: 'js', watch: [backend], env: {MODE : 'prod'} })
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
             console.log('[nodemon] restarted dev server');

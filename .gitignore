@@ -6,4 +6,4 @@
 /nbproject/private/
 npm-debug.log
 .sass-cache/
-.config*
+.noderc*

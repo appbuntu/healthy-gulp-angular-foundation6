@@ -1,19 +1,20 @@
-// upload user local preferences if any
-config = require('./etc/_Config');
-
-var RestAPI = require('./devServer/RestAPI');
-var session = require('express-session');
+var config  = require('../etc/_Config');
+var RestAPI = require('./RestApis/_all');
+var fs      = require('fs');
 
 var express        = require('express');
-var app            = express();
+var session        = require('express-session');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+
+// instanciate express HTTP server
+var app = express();
 
  // create a session cookie to protect API
  app.use(session({secret:config.SECRET, resave: false, saveUninitialized:false}));
 
 // instanciate REST API before set session flag to clean
-new RestAPI (config, app); 
+new RestAPI (app); 
 
 // chose dev or prod rootdir
 var staticdir = 'dist.dev';
@@ -29,10 +30,16 @@ app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-M
 function setSession (req, res, next) {
     if (req.originalUrl === "/") req.session.logged=true;
     next();
-};
+}
+
+var rootdir= __dirname + '/../../' + staticdir;
+ if (!fs.existsSync (rootdir)) {
+    console.log ("### HOOPS Rootdir not found rootdir=%s\n", rootdir);
+    process.exit ();
+}
 
 // set the static files location /public/img will be /img for users
-app.use(setSession, express.static(__dirname + '/' + staticdir)); 
+app.use(setSession, express.static(rootdir)); 
 
 // rewrite requested URL to include Angular hashPrompt and set session flag for RestAPI
 app.get('/*', function(req, res) {
@@ -42,4 +49,4 @@ app.get('/*', function(req, res) {
 
 // start app ===============================================
 app.listen(config.PORT, config.HOST); 
-console.log('Server Listening http://%s:%d (rootdir=%s)', config.HOST, config.PORT, __dirname + '/' + staticdir);
+console.log('Server Listening http://%s:%d (rootdir=%s)', config.HOST, config.PORT, rootdir);

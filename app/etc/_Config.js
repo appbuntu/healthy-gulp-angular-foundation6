@@ -23,7 +23,7 @@ function Config () {
    var conf;
 
    // Configs file path last one supersead first one.
-   var files= [__dirname + "/AppDefaults.js", "/etc/default/config"+ extention, process.env.NODERC, process.env.HOME + "/.config"+ extention , __dirname +"/../.config.js" ];
+   var files= [__dirname + "/AppDefaults.js", "/etc/default/noderc"+ extention, process.env.NODERC, process.env.HOME + "/.noderc"+ extention , __dirname +"/../../.noderc.js" ];
 
    // Parse any existing files within config list & merge them
    for (var idx in files) { 

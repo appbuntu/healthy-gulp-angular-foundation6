@@ -18,12 +18,14 @@
 
 // Default config will be superseaded by ProjectRoot/.config-l4a.js $HOME/.config-l4a.js /etc/default/config-l4a.js
 config = {
-    APPNAME: 'MySampleApp', 
-    HOST   : 'localhost',
-    PORT   : 8080,
-    URLBASE: '/',
-    SECRET : Math.random().toString(36).slice(2),
-    LOGDIR : __dirname + '/log',
+    APPNAME : 'MySampleApp',       // AppName is use as main Angular Module name
+    HOST    : 'localhost',         // HTTP will only listen on related Internet interface
+    PORT    : 8080,                // HTTP port
+    URLBASE : '/',                 // HTML basedir when running in production                     
+    LOGDIR  : __dirname + '/log',  // httpd log file
+    FRONTEND: "Frontend",          // HTML5 frontend  [WARNING: no leading './']
+    BACKEND : "Backend",           // NodeJS Rest API [WARNING: no leading './']
+    SECRET  : Math.random().toString(36).slice(2) // [default cookie session]
 };
 
 module.exports = config;
